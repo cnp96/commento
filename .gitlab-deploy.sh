@@ -58,18 +58,12 @@ deploy() {
 
         else
           exec_ssh "[[ \$(docker ps -q --filter 'name=comments_db') == '' ]] && docker-compose up --force-recreate -d comments_db"
+          exec_ssh "docker-compose up --force-recreate -d comments_server"
           if [[ $? -ne 0 ]]; then
-            echo "Error: Start Comments DB service failed!"
+            echo "Error: Start Comments API service failed!"
             failed=1
-
           else
-            exec_ssh "docker-compose up --force-recreate -d comments_server"
-            if [[ $? -ne 0 ]]; then
-              echo "Error: Start Comments API service failed!"
-              failed=1
-            else
-              echo "Success: $host All comments services are operational!"
-            fi
+            echo "Success: $host All comments services are operational!"
           fi
         fi
       fi
