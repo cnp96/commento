@@ -14,8 +14,6 @@ default:
   retry: 0
   tags: 
     - "shared-01"
-  before_script:
-    - eval $DOCKER_LOGIN_CMD
 
 
 build-image:
@@ -27,6 +25,7 @@ build-image:
       when: manual
   
   script:
+    - eval $DOCKER_LOGIN_CMD
     - if ! eval $DOCKER_IMAGE_EXISTS;
         then docker build --cache-from $CI_REGISTRY/$IMAGE:latest -t $IMAGE .;
         pushImage=false;
@@ -40,7 +39,13 @@ build-image:
         fi;
 
         if $pushImage; then
+
+          echo "Pushing images..."
+          echo -e "Current Tag:" $IMAGE
+          
           docker tag $IMAGE $CI_REGISTRY_IMAGE:latest;
+          echo -e "Created Latest Tag:" $CI_REGISTRY_IMAGE:latest
+          
           docker push $IMAGE;
           docker push $CI_REGISTRY_IMAGE:latest;
           
