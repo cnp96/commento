@@ -116,7 +116,7 @@ create_docker_compose_file() {
 
 services:
   comments_server:
-    image: s9_comments:latest
+    image: $CI_REGISTRY_IMAGE:latest
     ports:
       - $LISTEN_PORT:8080
     environment:
