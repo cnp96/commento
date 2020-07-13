@@ -25,7 +25,7 @@ func configParse() error {
 		// time of writing, commento.io uses 600). See https://wiki.postgresql.org/wiki/Number_Of_Database_Connections
 		"MAX_IDLE_PG_CONNECTIONS": "50",
 
-		"BIND_ADDRESS": "127.0.0.1",
+		"BIND_ADDRESS": "0.0.0.0",
 		"PORT":         "8080",
 		"ORIGIN":       "",
 
@@ -57,6 +57,9 @@ func configParse() error {
 		"GITLAB_KEY":    "",
 		"GITLAB_SECRET": "",
 		"GITLAB_URL":    "https://gitlab.com",
+
+		"IDP_ENDPOINT": "",
+		"IDP_APIKEY":   "",
 	}
 
 	if os.Getenv("COMMENTO_CONFIG_FILE") != "" {
@@ -71,6 +74,7 @@ func configParse() error {
 		} else {
 			os.Setenv(key, os.Getenv("COMMENTO_"+key))
 		}
+
 	}
 
 	// Mandatory config parameters

@@ -1,7 +1,5 @@
 package main
 
-import ()
-
 var ownersRowColumns string = `
 	owners.ownerHex,
 	owners.email,
@@ -42,24 +40,23 @@ func ownerGetByEmail(email string) (owner, error) {
 }
 
 func ownerGetByOwnerToken(ownerToken string) (owner, error) {
+	// Fetch user info from V2 API using access token
 	if ownerToken == "" {
 		return owner{}, errorMissingField
 	}
 
-	statement := `
-		SELECT ` + ownersRowColumns + `
-		FROM owners
-		WHERE owners.ownerHex IN (
-			SELECT ownerSessions.ownerHex FROM ownerSessions
-			WHERE ownerSessions.ownerToken = $1
-		);
-	`
-	row := db.QueryRow(statement, ownerToken)
+	profile := NewLoginRadiusAuthService().GetProfileByAccessToken(ownerToken)
 
-	var o owner
-	if err := ownersRowScan(row, &o); err != nil {
-		logger.Errorf("cannot scan owner: %v\n", err)
+	if profile == nil {
 		return owner{}, errorInternal
+	}
+
+	o := owner{
+		OwnerHex:       profile.Uid,
+		Email:          profile.Email[0].Value,
+		Name:           profile.Name,
+		ConfirmedEmail: *profile.EmailVerified,
+		JoinDate:       profile.JoinDate,
 	}
 
 	return o, nil
