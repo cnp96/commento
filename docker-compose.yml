@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-  server:
-    build: .
+  comments_server:
+    image: s9_comments:latest
     ports:
-      - 8080:8080
+      - 3003:8080
     environment:
       COMMENTO_ORIGIN: "${COMMENTO_ORIGIN}"
       COMMENTO_PORT: "${COMMENTO_PORT}"
@@ -21,11 +21,11 @@ services:
       COMMENTO_IDP_ENDPOINT: "${COMMENTO_IDP_ENDPOINT}"
       COMMENTO_IDP_APIKEY: "${COMMENTO_IDP_APIKEY}"
     depends_on:
-      - db
+      - comments_db
     networks:
       - db_network
       
-  db:
+  comments_db:
     image: postgres
     ports: 
       - 5432:5432

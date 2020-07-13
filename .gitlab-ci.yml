@@ -1,93 +1,64 @@
 stages:
-  - go-fmt
-  - go-test
-  - build-src
-  - build-docker
-  - docker-registry-master
-  - docker-registry-tags
+  - build
+  - deploy
 
-build-src:
-  stage: build-src
-  image: debian:buster
-  except:
-    - master
-    - tags
-  before_script:
-    - bash $CI_PROJECT_DIR/scripts/gitlab-ci-build-prescript
-  script:
-    - export GOPATH=/go
-    - export PATH=$PATH:/go/bin
-    - cd /go/src/$CI_PROJECT_NAME
-    - make devel
-    - make prod
+variables:
+ LISTEN_PORT: 3003
+ IMAGE: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+ DOCKER_IMAGE_EXISTS: "DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE >> /dev/null"
+ DOCKER_LOGIN_CMD: "echo $REGISTRY_TOKEN | docker login -u $REGISTRY_USER --password-stdin $CI_REGISTRY"
 
-build-docker:
-  stage: build-docker
-  image: docker:stable
-  services:
-    - docker:dind
-  except:
-    - master
-    - tags
-  script:
-    - docker build -t commento .
+# Defaults
+default:
+  interruptible: true
+  retry: 0
+  tags: 
+    - "shared-01"
 
-go-test:
-  stage: go-test
-  image: golang:1.14
-  services:
-    - postgres:9.6
-  variables:
-    POSTGRES_USER: postgres
-    POSTGRES_PASSWORD: postgres
-    POSTGRES_DB: commento_test
-    COMMENTO_POSTGRES: postgres://postgres:postgres@postgres/commento_test?sslmode=disable
-  except:
-    - master
-    - tags
-  before_script:
-    - mkdir -p /go/src /go/bin /go/pkg
-    - export GOPATH=/go
-    - export PATH=$PATH:/go/bin
-    - ln -s $CI_PROJECT_DIR /go/src/$CI_PROJECT_NAME
+build-image:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_REF_NAME =~ /v.*/i
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != ""
+      when: manual
+  
   script:
-    - cd /go/src/$CI_PROJECT_NAME
-    - make test
+    - if ! eval $DOCKER_IMAGE_EXISTS;
+        then docker build --cache-from $CI_REGISTRY/$IMAGE:latest -t $IMAGE .;
+        pushImage=false;
+        
+        if [[ $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH =~ /ci-test-*/i ]]; then
+          pushImage=true;
+        fi;
+        
+        if [[ $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" ]]; then
+          pushImage=true;
+        fi;
 
-go-fmt:
-  stage: go-fmt
-  image: golang:1.14
-  except:
-    - master
-    - tags
-  script:
-    - cd api
-    - test -z $(go fmt)
+        if $pushImage; then
+          docker push $IMAGE;
+          docker rmi $IMAGE;
+        fi;
+      fi
 
-docker-registry-master:
-  stage: docker-registry-master
-  image: docker:stable
-  services:
-    - docker:dind
-  only:
-    - master@commento/commento
-  before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+deploy-in-dev:
+  stage: deploy
+  environment:
+    name: dev
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_REF_NAME =~ /v.*/i
+    - if: $CI_COMMIT_BRANCH =~ /^ci-test-*/i
+      when: manual
   script:
-    - docker pull registry.gitlab.com/commento/commento:latest || true
-    - docker build --cache-from registry.gitlab.com/commento/commento:latest --tag registry.gitlab.com/commento/commento:latest .
-    - docker push registry.gitlab.com/commento/commento:latest
+    - bash .gitlab-deploy.sh
 
-docker-registry-tags:
-  stage: docker-registry-tags
-  image: docker:stable
-  services:
-    - docker:dind
-  only:
-    - tags
-  before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+deploy-in-production:
+  stage: deploy
+  environment:
+    name: production
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_REF_NAME =~ /v.*/i
+      when: manual
   script:
-    - apk add git
-    - docker build --tag registry.gitlab.com/commento/commento:$(git describe --tags) .
-    - docker push registry.gitlab.com/commento/commento:$(git describe --tags)
+    - bash .gitlab-deploy.sh
