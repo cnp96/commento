@@ -37,9 +37,12 @@ build-image:
         fi;
 
         if $pushImage; then
+          docker tag $IMAGE $CI_REGISTRY_IMAGE:latest;
           docker push $IMAGE;
-          docker push $IMAGE $CI_REGISTRY_IMAGE:latest;
+          docker push $CI_REGISTRY_IMAGE:latest;
+          
           docker rmi $IMAGE;
+          docker rmi $IMAGE:latest;
         fi;
       fi
 
