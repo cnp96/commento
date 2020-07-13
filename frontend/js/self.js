@@ -2,20 +2,20 @@
   "use strict";
 
   // Get self details.
-  global.selfGet = function(callback) {
+  global.selfGet = function (callback) {
     var json = {
-      "ownerToken": global.cookieGet("commentoOwnerToken"),
+      ownerToken: global.cookieGet("accessToken"),
     };
 
     if (json.ownerToken === undefined) {
-      document.location = global.origin + "/login";
+      document.location = "/login?redirect=/comments/dashboard";
       return;
     }
 
-    global.post(global.origin + "/api/owner/self", json, function(resp) {
+    global.post(global.origin + "/api/owner/self", json, function (resp) {
       if (!resp.success || !resp.loggedIn) {
-        global.cookieDelete("commentoOwnerToken");
-        document.location = global.origin + "/login";
+        global.cookieDelete("accessToken");
+        document.location = "/login?redirect=/comments/dashboard";
         return;
       }
 
@@ -23,5 +23,4 @@
       callback();
     });
   };
-
-}(window.commento, document));
+})(window.commento, document);

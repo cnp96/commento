@@ -1,7 +1,17 @@
-You recently requested a data export of your Commento domain {{.Domain}}. You
-can download a GZipped archive of a JSON export of all the comments and
-commenters associated with the domain here:
+<!DOCTYPE html>
+<html lang="en">
 
-{{.Origin}}/api/domain/export/download?exportHex={{.ExportHex}}
+<head>
+  <meta name="viewport" content="user-scalable=no,initial-scale=1">
+</head>
 
-The archive will be available for download for 7 days.
+<body>
+  You recently requested a data export of your Social9 Commento domain {{.Domain}}. You
+  can download a GZipped archive of a JSON export of all the comments and
+  commenters associated with the domain <a
+    href="{{.Origin}}/api/domain/export/download?exportHex={{.ExportHex}}">here</a>.
+
+  The archive will be available for download for 7 days.
+</body>
+
+</html>

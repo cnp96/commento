@@ -1,7 +1,19 @@
-Hi,
+<!DOCTYPE html>
+<html lang="en">
 
-Someone (probably you) recently initiated the procedure to reset your Commento account password. To do this, use the link below:
+<head>
+  <meta name="viewport" content="user-scalable=no,initial-scale=1">
+</head>
 
-{{.Origin}}/reset?hex={{.ResetHex}}
+<body>
+  Hi,
 
-If you did not initiate this request, you can safely ignore this email.
+  Someone (probably you) recently initiated the procedure to reset your Social9 Commento account password. To do this,
+  please <a href="{{.Origin}}/reset?hex={{.ResetHex}}">Click Here</a> or use the link below:
+
+  {{.Origin}}/reset?hex={{.ResetHex}}
+
+  If you did not initiate this request, you can safely ignore this email.
+</body>
+
+</html>

@@ -1,10 +1,10 @@
 (function (global, document) {
   "use strict";
 
-  global.resetPassword = function(event) {
+  global.resetPassword = function (event) {
     event.preventDefault();
 
-    var allOk = global.unfilledMark(["#password", "#password2"], function(el) {
+    var allOk = global.unfilledMark(["#password", "#password2"], function (el) {
       el.css("border-bottom", "1px solid red");
     });
 
@@ -19,26 +19,27 @@
     }
 
     var json = {
-      "resetHex": global.paramGet("hex"),
-      "password": $("#password").val(),
+      resetHex: global.paramGet("hex"),
+      password: $("#password").val(),
     };
 
     global.buttonDisable("#reset-button");
-    global.post(global.origin + "/api/reset", json, function(resp) {
+    global.post(global.origin + "/api/reset", json, function (resp) {
       global.buttonEnable("#reset-button");
 
       global.textSet("#err", "");
       if (!resp.success) {
         global.textSet("#err", resp.message);
-        return
+        return;
       }
 
       if (resp.entity === "owner") {
-        document.location = global.origin + "/login?changed=true";
+        document.location = "/login?redirect=/comments/dashboard&changed=true";
       } else {
-        $("#msg").html("Your password has been reset. You may close this window and try logging in again.");
+        $("#msg").html(
+          "Your password has been reset. You may close this window and try logging in again."
+        );
       }
     });
-  }
-
-} (window.commento, document));
+  };
+})(window.commento, document);

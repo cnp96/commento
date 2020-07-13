@@ -1,5 +1,7 @@
 build
 devel.env
+.env
+commentodb
 
 # Ignoring for IDE-specific files
 .idea/*

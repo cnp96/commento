@@ -1,17 +1,18 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"mime"
 	"net/http"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/gorilla/mux"
 )
 
 func redirectLogin(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, os.Getenv("ORIGIN")+"/login", 301)
+	http.Redirect(w, r, os.Getenv("ORIGIN")+"/dashboard", 301)
 }
 
 type staticPlugs struct {
@@ -94,14 +95,14 @@ func staticRouterInit(router *mux.Router) error {
 	}
 
 	pages := []string{
-		"/login",
-		"/forgot",
-		"/reset",
-		"/signup",
+		// "/login",
+		// "/forgot",
+		// "/reset",
+		// "/signup",
+		// "/settings",
 		"/confirm-email",
 		"/unsubscribe",
 		"/dashboard",
-		"/settings",
 		"/logout",
 		"/profile",
 	}
@@ -131,7 +132,8 @@ func staticRouterInit(router *mux.Router) error {
 		})
 	}
 
-	router.HandleFunc("/", redirectLogin)
+	router.HandleFunc(subdir, redirectLogin)
+	router.HandleFunc(subdir+"/", redirectLogin)
 
 	return nil
 }

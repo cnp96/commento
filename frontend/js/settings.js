@@ -1,9 +1,9 @@
 (function (global, document) {
   "use strict";
 
-  (document);
+  document;
 
-  global.vueConstruct = function(callback) {
+  global.vueConstruct = function (callback) {
     var reactiveData = {
       hasSource: global.owner.hasSource,
       lastFour: global.owner.lastFour,
@@ -19,25 +19,25 @@
     }
   };
 
-  global.settingShow = function(setting) {
+  global.settingShow = function (setting) {
     $(".pane-setting").removeClass("selected");
     $(".view").hide();
     $("#" + setting).addClass("selected");
     $("#" + setting + "-view").show();
   };
 
-  global.deleteOwnerHandler = function() {
+  global.deleteOwnerHandler = function () {
     if (!confirm("Are you absolutely sure you want to delete your account?")) {
       return;
     }
 
     var json = {
-      "ownerToken": global.cookieGet("commentoOwnerToken"),
-    }
+      ownerToken: global.cookieGet("accessToken"),
+    };
 
     $("#delete-owner-button").prop("disabled", true);
     $("#delete-owner-button").text("Deleting...");
-    global.post(global.origin + "/api/owner/delete", json, function(resp) {
+    global.post(global.origin + "/api/owner/delete", json, function (resp) {
       if (!resp.success) {
         $("#delete-owner-button").prop("disabled", false);
         $("#delete-owner-button").text("Delete Account");
@@ -46,9 +46,8 @@
         return;
       }
 
-      global.cookieDelete("commentoOwnerToken");
-      document.location = global.origin + "/login?deleted=true";
+      global.cookieDelete("accessToken");
+      document.location = "/login?redirect=/comments/dashboard&deleted=true";
     });
   };
-
-} (window.commento, document));
+})(window.commento, document);

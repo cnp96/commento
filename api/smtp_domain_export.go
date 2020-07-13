@@ -14,7 +14,7 @@ type domainExportPlugs struct {
 
 func smtpDomainExport(to string, toName string, domain string, exportHex string) error {
 	var header bytes.Buffer
-	headerTemplate.Execute(&header, &headerPlugs{FromAddress: os.Getenv("SMTP_FROM_ADDRESS"), ToAddress: to, ToName: toName, Subject: "Commento Data Export"})
+	headerTemplate.Execute(&header, &headerPlugs{FromAddress: os.Getenv("SMTP_FROM_ADDRESS"), ToAddress: to, ToName: toName, Subject: "Social9 Comments Data Export"})
 
 	var body bytes.Buffer
 	templates["domain-export"].Execute(&body, &domainExportPlugs{Origin: os.Getenv("ORIGIN"), ExportHex: exportHex})

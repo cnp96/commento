@@ -20,9 +20,9 @@ var templates map[string]*template.Template
 func smtpTemplatesLoad() error {
 	var err error
 	headerTemplate, err = template.New("header").Parse(`MIME-Version: 1.0
-From: Commento <{{.FromAddress}}>
+From: Social9 Comments <{{.FromAddress}}>
 To: {{.ToName}} <{{.ToAddress}}>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/html; charset=UTF-8
 Subject: {{.Subject}}
 
 `)

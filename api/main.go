@@ -11,7 +11,7 @@ func main() {
 	exitIfError(oauthConfigure())
 	exitIfError(markdownRendererCreate())
 	exitIfError(sigintCleanupSetup())
-	exitIfError(versionCheckStart())
+	// exitIfError(versionCheckStart())
 	exitIfError(domainExportCleanupBegin())
 	exitIfError(viewsCleanupBegin())
 	exitIfError(ssoTokenCleanupBegin())

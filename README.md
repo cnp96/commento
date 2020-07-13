@@ -1,4 +1,52 @@
-### Commento
+## Social9 Comments
+
+Social9 implements the comment service using an open-source project **Commento**. 
+
+## Development Setup
+**Start the Database**
+This is exposed to `localhost:5432`
+```bash
+$ docker-compose up db
+```
+
+### Build Source Code
+```bash
+$ make prod
+```
+
+### Run Source Code
+Export the following environment variables in a `.env` file.
+```bash
+COMMENTO_ORIGIN=<Origin Address>
+COMMENTO_PORT=8080
+
+COMMENTO_POSTGRES=postgres://postgres:postgres@localhost:5432/commento?sslmode=disable
+POSTGRES_DB=commento
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+
+COMMENTO_SMTP_HOST=<Mail Host>
+COMMENTO_SMTP_PORT=<Mail Port>
+COMMENTO_SMTP_USERNAME=<Maili Username>
+COMMENTO_SMTP_PASSWORD=<Mail Password>
+COMMENTO_SMTP_FROM_ADDRESS=<Mail From Address>
+
+COMMENTO_GOOGLE_KEY=<Google App Key For OAuth>
+COMMENTO_GOOGLE_SECRET=<Google App Secret>
+COMMENTO_GITHUB_KEY=<Github App Key For OAuth>
+COMMENTO_GITHUB_SECRET=<Github App Secret>
+
+COMMENTO_IDP_ENDPOINT=<LoginRadius IDP En Endpoint>
+COMMENTO_IDP_APIKEY=<LoginRadius App API Key>
+```
+
+**Start the services**
+```bash
+$ make prod
+$ source .env && ./build/prod/commento
+```
+
+### Commento - OpenSource
 
 ##### [Homepage](https://commento.io) &nbsp;&ndash;&nbsp; [Demo](https://demo.commento.io) &nbsp;&ndash;&nbsp; [Documentation](https://docs.commento.io) &nbsp;&ndash;&nbsp; [Contributing](https://docs.commento.io/contributing/) &nbsp;&ndash;&nbsp; [#commento on Freenode](http://webchat.freenode.net/?channels=%23commento)
 

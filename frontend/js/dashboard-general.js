@@ -1,34 +1,34 @@
 (function (global, document) {
   "use strict";
 
-  (document);
+  document;
 
   // Opens the general settings window.
-  global.generalOpen = function() {
+  global.generalOpen = function () {
     $(".view").hide();
     $("#general-view").show();
   };
 
-  global.generalSaveHandler = function() {
+  global.generalSaveHandler = function () {
     var data = global.dashboard.$data;
 
     global.buttonDisable("#save-general-button");
-    global.domainUpdate(data.domains[data.cd], function() {
+    global.domainUpdate(data.domains[data.cd], function () {
       global.globalOKShow("Settings saved!");
       global.buttonEnable("#save-general-button");
     });
   };
 
-  global.ssoProviderChangeHandler = function() {
+  global.ssoProviderChangeHandler = function () {
     var data = global.dashboard.$data;
 
     if (data.domains[data.cd].ssoSecret === "") {
       var json = {
-        "ownerToken": global.cookieGet("commentoOwnerToken"),
-        "domain": data.domains[data.cd].domain,
+        ownerToken: global.cookieGet("accessToken"),
+        domain: data.domains[data.cd].domain,
       };
 
-      global.post(global.origin + "/api/domain/sso/new", json, function(resp) {
+      global.post(global.origin + "/api/domain/sso/new", json, function (resp) {
         if (!resp.success) {
           global.globalErrorShow(resp.message);
           return;
@@ -41,5 +41,4 @@
       $("#sso-secret").val(data.domains[data.cd].ssoSecret);
     }
   };
-
-} (window.commento, document));
+})(window.commento, document);

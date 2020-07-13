@@ -1,10 +1,10 @@
 (function (global, document) {
-  "use strict"
+  "use strict";
 
   // Signs up the user and redirects to either the login page or the email
   // confirmation, depending on whether or not SMTP is configured in the
   // backend.
-  global.signup = function(event) {
+  global.signup = function (event) {
     event.preventDefault();
 
     if ($("#password").val() !== $("#password2").val()) {
@@ -12,9 +12,12 @@
       return;
     }
 
-    var allOk = global.unfilledMark(["#email", "#name", "#password", "#password2"], function(el) {
-      el.css("border-bottom", "1px solid red");
-    });
+    var allOk = global.unfilledMark(
+      ["#email", "#name", "#password", "#password2"],
+      function (el) {
+        el.css("border-bottom", "1px solid red");
+      }
+    );
 
     if (!allOk) {
       global.textSet("#err", "Please make sure all fields are filled");
@@ -22,14 +25,14 @@
     }
 
     var json = {
-      "email": $("#email").val(),
-      "name": $("#name").val(),
-      "password": $("#password").val(),
+      email: $("#email").val(),
+      name: $("#name").val(),
+      password: $("#password").val(),
     };
 
     global.buttonDisable("#signup-button");
-    global.post(global.origin + "/api/owner/new", json, function(resp) {
-      global.buttonEnable("#signup-button")
+    global.post(global.origin + "/api/owner/new", json, function (resp) {
+      global.buttonEnable("#signup-button");
 
       if (!resp.success) {
         global.textSet("#err", resp.message);
@@ -39,9 +42,8 @@
       if (resp.confirmEmail) {
         document.location = global.origin + "/confirm-email";
       } else {
-        document.location = global.origin + "/login?signedUp=true";
+        document.location = "/login?redirect=/comments/dashboard&signedUp=true";
       }
     });
   };
-
-} (window.commento, document));
+})(window.commento, document);

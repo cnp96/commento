@@ -1,7 +1,20 @@
-Hi,
+<!DOCTYPE html>
+<html lang="en">
 
-You recently registered a new Commento account with this email address. If you wish to complete registration, use the link below:
+<head>
+  <meta name="viewport" content="user-scalable=no,initial-scale=1">
+</head>
 
-{{.Origin}}/api/owner/confirm-hex?confirmHex={{.ConfirmHex}}
+<body>
+  Hi,
 
-If you did not do initiate this, you can ignore this email.
+  You recently registered a new Social9 Comments account with this email address. If you wish to complete registration,
+  Please <a href="{{.Origin}}/api/owner/confirm-hex?confirmHex={{.ConfirmHex}}">click here</a> or use the link below:
+
+  {{.Origin}}/api/owner/confirm-hex?confirmHex={{.ConfirmHex}}
+
+  If you did not do initiate this, you can ignore this email.
+
+</body>
+
+</html>
