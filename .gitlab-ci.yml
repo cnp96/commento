@@ -43,9 +43,9 @@ build-image:
           echo -e "Pushing images...\n";
           
           docker push $IMAGE;
-          docker rmi $IMAGE;
-          
           docker push $CI_REGISTRY_IMAGE:latest;
+          
+          docker rmi $IMAGE;
           docker rmi $CI_REGISTRY_IMAGE:latest;
         fi;
       fi
