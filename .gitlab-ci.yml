@@ -40,17 +40,13 @@ build-image:
 
         docker build --cache-from $CI_REGISTRY/$IMAGE:latest -t $IMAGE .;
         if $pushImage; then
-
-          echo "Pushing images...";
-          echo -e "\nCurrent Tag:" $IMAGE;
-                   
-          echo -e "\nUpdated Latest Tag:" $CI_REGISTRY_IMAGE:latest;
+          echo -e "Pushing images...\n";
           
           docker push $IMAGE;
-          docker push $CI_REGISTRY_IMAGE:latest;
-          
           docker rmi $IMAGE;
-          docker rmi $IMAGE:latest;
+          
+          docker push $CI_REGISTRY_IMAGE:latest;
+          docker rmi $CI_REGISTRY_IMAGE:latest;
         fi;
       fi
 
