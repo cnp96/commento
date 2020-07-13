@@ -137,7 +137,7 @@ services:
   comments_db:
     image: postgres
     ports:
-      - 5432:5432
+      - $POSTGRES_PORT:5432
     environment:
       POSTGRES_DB: \"\${POSTGRES_DB}\"
       POSTGRES_USER: \"\${POSTGRES_USER}\"
@@ -146,12 +146,12 @@ services:
     networks:
       - db_network
     volumes:
-      - ./commentodb:/var/lib/postgresql/data
+      - ./commentsdb:/var/lib/postgresql/data
 
 networks:
   db_network:
 
-" >"docker-compose-test.yml"
+" >"docker-compose.yml"
 }
 
 # Begin
