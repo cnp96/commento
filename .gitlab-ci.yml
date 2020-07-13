@@ -14,6 +14,9 @@ default:
   retry: 0
   tags: 
     - "shared-01"
+  before_script:
+    - eval $DOCKER_LOGIN_CMD
+
 
 build-image:
   stage: build
