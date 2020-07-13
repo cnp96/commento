@@ -37,15 +37,15 @@ deploy() {
     # Docker login in the remote machine
     exec_ssh $DOCKER_LOGIN_CMD
 
+    failed=0
     exec_scp $APP_ENV_FILE $APP_ENV_FILE
     if [[ $? -ne 0 ]]; then
-      echo "Error: Copy env failed!" && return 1
+      echo "Error: Copy env failed!"
+      failed=1
 
     else
       create_docker_compose_file
       exec_scp "docker-compose.yml" "docker-compose.yml"
-
-      failed=0
       if [[ $? -ne 0 ]]; then
         echo "Error: Copy compose file failed!"
         failed=1
@@ -57,7 +57,7 @@ deploy() {
           failed=1
 
         else
-          exec_ssh "[[ $(docker ps -q --filter 'name=comments_db') == '' ]] && docker-compose up --force-recreate -d comments_db"
+          exec_ssh "[[ \$(docker ps -q --filter 'name=comments_db') == '' ]] && docker-compose up --force-recreate -d comments_db"
           if [[ $? -ne 0 ]]; then
             echo "Error: Start Comments DB service failed!"
             failed=1
@@ -68,7 +68,7 @@ deploy() {
               echo "Error: Start Comments API service failed!"
               failed=1
             else
-              echo "Success: All services are operational!"
+              echo "Success: $host All comments services are operational!"
             fi
           fi
         fi
@@ -76,7 +76,7 @@ deploy() {
     fi
 
     if [[ failed -eq 1 ]]; then
-      echo "Error: Deployment on Node $host failed!"
+      echo "Error: Deployment on Node $host -- failed!"
       return 1
     fi
 

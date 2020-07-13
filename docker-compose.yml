@@ -2,7 +2,7 @@ version: '3'
 
 services:
   comments_server:
-    image: s9_comments:latest
+    image: registry.gitlab.com/socialsuite/s9_comments:latest
     ports:
       - 3003:8080
     environment:
