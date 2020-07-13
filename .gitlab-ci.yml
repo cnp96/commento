@@ -38,6 +38,7 @@ build-image:
 
         if $pushImage; then
           docker push $IMAGE;
+          docker push $IMAGE $IMAGE:latest;
           docker rmi $IMAGE;
         fi;
       fi

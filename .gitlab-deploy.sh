@@ -39,20 +39,47 @@ deploy() {
 
     exec_scp $APP_ENV_FILE $APP_ENV_FILE
     if [[ $? -ne 0 ]]; then
-      echo "Error: Copy failed!" && return 1
+      echo "Error: Copy env failed!" && return 1
+
+    else
+      create_docker_compose_file
+      exec_scp "docker-compose.yml" "docker-compose.yml"
+
+      failed=0
+      if [[ $? -ne 0 ]]; then
+        echo "Error: Copy compose file failed!"
+        failed=1
+
+      else
+        exec_ssh "docker pull $CI_REGISTRY_IMAGE:latest"
+        if [[ $? -ne 0 ]]; then
+          echo "Error: Pull latest tag failed!"
+          failed=1
+
+        else
+          exec_ssh "[[ $(docker ps -q --filter 'name=comments_db') == '' ]] && docker-compose up --force-recreate -d comments_db"
+          if [[ $? -ne 0 ]]; then
+            echo "Error: Start Comments DB service failed!"
+            failed=1
+
+          else
+            exec_ssh "docker-compose up --force-recreate -d comments_server"
+            if [[ $? -ne 0 ]]; then
+              echo "Error: Start Comments API service failed!"
+              failed=1
+            else
+              echo "Success: All services are operational!"
+            fi
+          fi
+        fi
+      fi
     fi
 
-    exec_ssh "docker pull $IMAGE"
-    exec_ssh "docker tag $IMAGE s9_comments:latest"
-
-    exec_ssh "[[ $(docker ps -q --filter 'name=comments_db') == \"\" ]] && docker-compose up --force-recreate -d comments_db"
-    exec_ssh "docker-compose up --force-recreate -d comments_server"
-
-    result=$?
-    exec_ssh "rm -f $APP_ENV_FILE"
-    if [[ "$result" -ne 0 ]]; then
-      echo "Error: Start services failed!" && return 1
+    if [[ failed -eq 1 ]]; then
+      echo "Error: Deployment on Node $host failed!"
+      return 1
     fi
+
   done
 }
 
@@ -81,6 +108,56 @@ create_env_file() {
   echo -e "POSTGRES_DB=$(decode_b64 $POSTGRES_DB)" >>$APP_ENV_FILE
   echo -e "POSTGRES_USER=$(decode_b64 $POSTGRES_USER)" >>$APP_ENV_FILE
   echo -e "POSTGRES_PASSWORD=$(decode_b64 $POSTGRES_PASSWORD)" >>$APP_ENV_FILE
+}
+
+create_docker_compose_file() {
+  echo "Creating docker-compose.yml"
+  echo -e "version: '3'
+
+services:
+  comments_server:
+    image: s9_comments:latest
+    ports:
+      - $LISTEN_PORT:8080
+    environment:
+      COMMENTO_ORIGIN: \"\${COMMENTO_ORIGIN}\"
+      COMMENTO_PORT: \"\${COMMENTO_PORT}\"
+      COMMENTO_POSTGRES: \"\${COMMENTO_POSTGRES}\"
+      COMMENTO_SMTP_HOST: \"\${COMMENTO_SMTP_HOST}\"
+      COMMENTO_SMTP_PORT: \"\${COMMENTO_SMTP_PORT}\"
+      COMMENTO_SMTP_USERNAME: \"\${COMMENTO_SMTP_USERNAME}\"
+      COMMENTO_SMTP_PASSWORD: \"\${COMMENTO_SMTP_PASSWORD}\"
+      COMMENTO_SMTP_FROM_ADDRESS: \"\${COMMENTO_SMTP_FROM_ADDRESS}\"
+      COMMENTO_GOOGLE_KEY: \"\${COMMENTO_GOOGLE_KEY}\"
+      COMMENTO_GOOGLE_SECRET: \"\${COMMENTO_GOOGLE_SECRET}\"
+      COMMENTO_GITHUB_KEY: \"\${COMMENTO_GITHUB_KEY}\"
+      COMMENTO_GITHUB_SECRET: \"\${COMMENTO_GITHUB_SECRET}\"
+      COMMENTO_IDP_ENDPOINT: \"\${COMMENTO_IDP_ENDPOINT}\"
+      COMMENTO_IDP_APIKEY: \"\${COMMENTO_IDP_APIKEY}\"
+    
+    depends_on:
+    - comments_db
+    networks:
+      - db_network
+
+  comments_db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: \"\${POSTGRES_DB}\"
+      POSTGRES_USER: \"\${POSTGRES_USER}\"
+      POSTGRES_PASSWORD: \"\${POSTGRES_PASSWORD}\"
+    
+    networks:
+      - db_network
+    volumes:
+      - ./commentodb:/var/lib/postgresql/data
+
+networks:
+  db_network:
+
+" >"docker-compose-test.yml"
 }
 
 # Begin
@@ -114,4 +191,6 @@ run() {
     exit $failed
   fi
 }
+
+# Execute script
 run
