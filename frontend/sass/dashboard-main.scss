@@ -3,7 +3,8 @@
 @import "checkbox.scss";
 @import "button.scss";
 
-.global-error, .global-ok {
+.global-error,
+.global-ok {
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -56,21 +57,25 @@ body {
     }
   }
 
-  .content{
+  .content {
     display: none;
-    padding: 12px;
+    padding: 12px 0;
 
     .pitch {
       color: $gray-6;
       margin-bottom: 24px;
       line-height: 22px;
-      
-      a       { color: $blue-6; }
-      a:hover { color: $blue-6; }
+
+      a {
+        color: $blue-6;
+      }
+      a:hover {
+        color: $blue-6;
+      }
     }
   }
 
-  .content.current{
+  .content.current {
     display: inherit;
   }
 }
@@ -78,10 +83,10 @@ body {
 .action-buttons-container {
   .action-buttons {
     .action-button {
-      padding: 8px 16px 8px 16px;
+      padding: 8px 16px;
       display: flex;
       border: 1px solid $gray-2;
-      margin: 8px;
+      margin: 8px 0 16px 0;
 
       .left {
         padding: 8px 16px;
@@ -159,18 +164,26 @@ body {
 
 .dashboard-container {
   position: relative;
-  top: 72px;
+  top: 84px;
   width: 100%;
   height: calc(100% - 94px);
-
+  & > div {
+    width: 1264px;
+    margin: 0 auto;
+    height: 100vh;
+  }
   .pane-left {
-    padding-top: 20px;
-    position: absolute;
-    left: 0px;
-    border-right: 1px solid $gray-1;
-    width: 240px;
-    height: 100%;
-
+    & > div {
+      flex-basis: calc(20% - 24px);
+      background: #fff;
+      padding: 18px 24px;
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+        0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      border-radius: 0.28571429rem;
+      &:not(:last-child) {
+        margin-right: 24px;
+      }
+    }
     .tree {
       opacity: 0.4;
       width: 100%;
@@ -187,34 +200,32 @@ body {
   }
 
   .pane-middle {
-    padding-top: 20px;
-    position: absolute;
-    left: 240px;
-    border-right: 1px solid $gray-1;
     width: 280px;
     height: 100%;
-    padding-left: 1px;
+    border-right: 1px solid $gray-1;
+    padding: 24px;
+    .pane-setting {
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid $gray-1;
+    }
   }
 
   .pane-right {
-    position: absolute;
-    left: 520px;
-    width: calc(100% - 520px);
+    flex: 1;
     height: 100%;
     overflow-y: auto;
-
     .hidden {
       display: none;
     }
 
     .view {
-      padding: 25px;
-      padding-top: 35px;
+      padding: 24px;
     }
 
     .view-inside {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .tiny-view {
@@ -257,21 +268,16 @@ body {
   .select-a-domain {
     padding: 20px;
     text-align: center;
-    color: $gray-5;
+    color: $black;
   }
 
   .pane-setting {
-    width: 100%;
-    height: 54px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     transition: all 0.2s;
     color: $gray-7;
 
-    .setting-title, .setting-subtitle {
+    .setting-title,
+    .setting-subtitle {
       display: block;
     }
 
@@ -304,18 +310,15 @@ body {
   }
 
   .pane-setting:hover {
-    color: $gray-6;
-    background: $gray-1;
+    color: $blue-7;
   }
 
   .selected {
     color: $blue-7;
-    background: $gray-2;
   }
 
   .selected:hover {
     color: $blue-7;
-    background: $gray-2;
   }
 }
 
@@ -332,6 +335,7 @@ body {
 
   ul {
     list-style: none;
+    padding-left: 20px;
   }
 
   li {
@@ -340,7 +344,7 @@ body {
   }
 
   li::before {
-    content: '';
+    content: "";
     display: inline-block;
     width: 4px;
     height: 4px;
@@ -378,6 +382,7 @@ body {
   padding: 8px 0px 8px 0px;
   margin: 8px 0px 8px 0px;
   display: flex;
+  flex-direction: column;
   width: 100%;
 
   .title {
@@ -437,9 +442,9 @@ body {
   }
 
   .modal-title {
-    padding-top: 15px;
+    padding: 15px 15px 0;
     width: 100%;
-    text-align: center;
+    text-align: left;
     font-size: 20px;
   }
 
@@ -479,14 +484,14 @@ body {
   margin-bottom: 25px;
 
   .box-title {
-    padding: 6px;
+    padding: 6px 0;
     padding-top: 0px;
     font-size: 19px;
   }
-  
+
   .box-subtitle {
     font-size: 14px;
-    padding: 6px;
+    padding: 6px 0;
     color: $gray-6;
     margin-bottom: 20px;
   }
@@ -497,8 +502,14 @@ body {
     color: $gray-6;
     opacity: 0.8;
 
-    a       { color: $gray-6; border: none; }
-    a:hover { color: $gray-6; border: none; }
+    a {
+      color: $gray-6;
+      border: none;
+    }
+    a:hover {
+      color: $gray-6;
+      border: none;
+    }
   }
 
   .gray:hover {
@@ -513,18 +524,16 @@ body {
 }
 
 .row {
-  padding-left: 8px;
-  padding-right: 8px;
   margin-top: 12px;
   margin-bottom: 12px;
   border-bottom: 1px solid $gray-2;
 
   .label {
     display: inline-block;
-    color: $gray-5;
+    color: $black;
     width: 100%;
-    font-size: 12px;
-    text-transform: uppercase;
+    font-size: 14px;
+    text-transform: capitalize;
   }
 
   .input {
@@ -560,14 +569,16 @@ body {
 }
 
 .stat {
-  -webkit-box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  -moz-box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  margin: 20px;
+  -webkit-box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  -moz-box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  margin: 20px 0 50px 0;
   padding: 20px;
   display: block;
   text-align: center;
-  width: calc(100% - 80px);
   background: white;
   border-radius: 3px;
 
@@ -598,13 +609,13 @@ body {
 }
 
 .center {
-  text-align: center;
+  text-align: right;
 }
 
 .center-title {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 300;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
 }
 
 .text {
@@ -618,8 +629,8 @@ foreignObject {
 
 .all-done {
   margin-top: 40px;
-  color: $gray-5;
-  font-size :15px;
+  color: $black;
+  font-size: 15px;
   font-weight: 400;
 }
 
@@ -658,7 +669,8 @@ foreignObject {
 }
 
 .orange-button {
-  color: $orange-8;
+  background: $orange-8;
+  color: white;
 }
 
 .orange-button:hover {
@@ -676,9 +688,12 @@ foreignObject {
 }
 
 .comment {
-  -webkit-box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  -moz-box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
-  box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+  -webkit-box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  -moz-box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
+    0 3px 6px 0 rgba(0, 0, 0, 0.07);
   width: calc(100% - 40px);
   background: white;
   border: 1px solid white;
@@ -696,12 +711,12 @@ foreignObject {
     .title {
       font-weight: 300;
       font-size: 18px;
-      color: $gray-5;
+      color: $black;
       margin-bottom: 18px;
       line-height: 28px;
 
       .postlink {
-        color: $gray-5;
+        color: $black;
       }
     }
 
@@ -718,7 +733,7 @@ foreignObject {
         float: left;
         margin-right: 12px;
       }
-      
+
       .names {
         margin-left: 50px;
 
@@ -728,7 +743,7 @@ foreignObject {
             font-weight: bold;
           }
         }
-        
+
         .time {
           color: $gray-4;
         }
@@ -765,4 +780,11 @@ foreignObject {
 code {
   font-family: monospace;
   font-size: 13px;
+}
+.domain-setting {
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 0.28571429rem;
+  background: $white;
+  margin-top: 24px;
 }

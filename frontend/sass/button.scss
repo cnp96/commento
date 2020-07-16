@@ -5,26 +5,28 @@
   @extend .shadow;
   height: 40px;
   min-width: 110px;
-  background: $white;
+  background: $blue-7;
   border: none;
   outline: none;
   padding: 0px 10px 0px 10px;
-  font-size: 12px;
-  text-transform: uppercase;
+  font-size: 14px;
+  text-transform: capitalize;
   text-align: center;
   font-weight: bold;
-  color: $blue-7;
+  color: $white;
   cursor: pointer;
   transition: all 0.2s;
+  border-radius: 4px;
 }
 
 .button:hover {
-  color: $blue-6;
+  color: $white;
 }
 
 .button:disabled {
   cursor: default;
-  color: $gray-6;
+  color: $gray-3;
+  background: $gray-6;
 }
 
 .short-button {

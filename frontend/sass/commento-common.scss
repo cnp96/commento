@@ -15,7 +15,7 @@ a {
 blockquote {
   margin: 0 0 0 8px;
   padding: 0 0 0 5px;
-  border-left: 2px solid $gray-5;
+  border-left: 2px solid $black;
   color: $gray-6;
 }
 
@@ -31,7 +31,7 @@ blockquote {
   padding: 6px;
   padding-left: 8px;
   padding-right: 8px;
-  box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   border: 1px solid transparent;
   border-radius: 3px;
   color: #fff;

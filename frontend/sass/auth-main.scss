@@ -48,8 +48,8 @@ body {
       margin-bottom: 20px;
       border-bottom: 1px solid $gray-1;
 
-      input[type=text],
-      input[type=password] {
+      input[type="text"],
+      input[type="password"] {
         font-size: 15px;
         display: inline-block;
         margin: 0;
@@ -66,14 +66,14 @@ body {
         background: $white;
       }
 
-      input[type=text]::placeholder,
-      input[type=password]::placeholder {
+      input[type="text"]::placeholder,
+      input[type="password"]::placeholder {
         color: $gray-3;
       }
 
       .label {
         display: inline-block;
-        color: $gray-5;
+        color: $black;
         width: 100%;
         font-size: 12px;
         text-transform: uppercase;
@@ -95,6 +95,7 @@ body {
       width: 100%;
       cursor: pointer;
       transition: all 0.2s;
+      border-radius: 4px;
     }
 
     .button:hover {
@@ -108,7 +109,9 @@ body {
       cursor: unset;
     }
 
-    .err, .msg, .link {
+    .err,
+    .msg,
+    .link {
       display: block;
       text-align: center;
       margin-top: 12px;
@@ -145,11 +148,11 @@ body {
 
 .cent {
   font-size: 12px;
-  color: $gray-5;
+  color: $black;
   text-align: center;
 
   .gray {
-    color: $gray-5;
+    color: $black;
     padding-left: 2px;
     padding-right: 2px;
     border-bottom: 1px solid $gray-3;

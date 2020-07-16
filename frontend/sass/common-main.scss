@@ -1,8 +1,14 @@
 @import "colors-main.scss";
 @import "source-sans.scss";
-
-html, input, button, textarea {
-  font-family: 'Source Sans Pro', sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif !important;
+}
+html,
+input,
+button,
+textarea {
+  font-family: "Lato", sans-serif !important;
 }
 
 html {
@@ -24,9 +30,83 @@ a:hover {
 }
 
 .shadow {
-  box-shadow: 0 1px 3px rgba(50,50,93,.15), 0 1px 0 rgba(0,0,0,.02);
+  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
 }
-
+.d-flex {
+  display: flex;
+}
+.align-items-center {
+  align-items: center;
+}
+.justify-content-between {
+  justify-content: space-between;
+}
+.align-items-stretch {
+  align-items: stretch;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  border-bottom: 1px solid #e7e7e8;
+  padding: 0 30px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  background-color: #ffffff;
+  color: #657786;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      height: 60px;
+      a {
+        align-items: center;
+        display: flex;
+        color: #657786;
+        height: 60px;
+        position: relative;
+        &:before {
+          content: "";
+          width: 0;
+          height: 2px;
+          background: #2f55d4;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          transition: all 0.3s;
+          &:hover,
+          &:active {
+            width: 100%;
+          }
+        }
+        &:hover,
+        &:active {
+          color: #2f55d4;
+        }
+      }
+      .logo {
+        img {
+          width: 106px;
+          height: 26px;
+        }
+      }
+      &:not(:last-child) {
+        margin-right: 40px;
+      }
+      #owner-name {
+        height: 60px;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
 .footer {
   position: relative;
   bottom: 0px;
@@ -61,7 +141,7 @@ a:hover {
         text-transform: uppercase;
         font-weight: 700;
         font-size: 12px;
-        color: $gray-5;
+        color: $black;
       }
     }
 
@@ -69,7 +149,7 @@ a:hover {
       margin-top: 12px;
       margin-bottom: 12px;
       display: block;
-      color: $gray-5;
+      color: $black;
       transition: all 0.2s;
     }
 
@@ -79,7 +159,7 @@ a:hover {
 
     @media only screen and (max-width: 1000px) {
       .link-group {
-        display: block
+        display: block;
       }
 
       .links {
