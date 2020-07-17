@@ -80,14 +80,15 @@ header {
           right: 0;
           bottom: 0;
           transition: all 0.3s;
-          &:hover,
-          &:active {
-            width: 100%;
-          }
         }
         &:hover,
         &:active {
           color: #2f55d4;
+          &:not(:first-child) {
+            &:before {
+              width: 100%;
+            }
+          }
         }
       }
       .logo {
@@ -99,7 +100,7 @@ header {
       &:not(:last-child) {
         margin-right: 40px;
       }
-      #owner-name {
+      & > div {
         height: 60px;
         display: flex;
         align-items: center;
@@ -138,7 +139,7 @@ header {
       margin: 40px;
 
       .header {
-        text-transform: uppercase;
+        text-transform: capitalize;
         font-weight: 700;
         font-size: 12px;
         color: $black;

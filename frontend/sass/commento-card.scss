@@ -12,8 +12,8 @@
   }
 
   .commento-avatar::after {
-    content:"";
-    display:block;
+    content: "";
+    display: block;
   }
 
   .commento-name {
@@ -33,7 +33,7 @@
 
   .commento-flagged::after {
     content: "Flagged";
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-size: 10px;
     background: $red-7;
     color: white;
@@ -45,7 +45,7 @@
 
   .commento-moderator::after {
     content: "Moderator";
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-size: 10px;
     background: $green-7;
     color: white;

@@ -95,11 +95,13 @@ body {
           font-weight: bold;
           color: $gray-7;
           font-size: 14px;
+          margin-bottom: 10px;
         }
 
         .subtitle {
           color: $gray-6;
           font-size: 14px;
+          line-height: 22px;
         }
       }
 
@@ -164,50 +166,70 @@ body {
 
 .dashboard-container {
   position: relative;
-  top: 84px;
+  top: 60px;
   width: 100%;
   height: calc(100% - 94px);
   & > div {
     width: 1264px;
     margin: 0 auto;
     height: 100vh;
+    padding: 0 32px;
   }
   .pane-left {
+    flex-wrap: wrap;
     & > div {
-      flex-basis: calc(20% - 24px);
+      display: flex;
+      align-items: center;
+      width: calc(20% - 19.5px);
       background: #fff;
       padding: 18px 24px;
       box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
         0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
       border-radius: 0.28571429rem;
+      margin-top: 24px;
+      word-break: break-all;
       &:not(:last-child) {
         margin-right: 24px;
+      }
+      &:last-child {
+        text-align: center;
       }
     }
     .tree {
       opacity: 0.4;
-      width: 100%;
+      width: calc(20% - 19.5px);
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
 
       .tree-svg {
-        margin-bottom: 20px;
-        width: 100px;
+        margin-bottom: 10px;
+        width: 40px;
       }
+    }
+    .pane-setting {
+      &:last-child {
+        justify-content: center;
+        display: flex;
+      }
+    }
+    .setting-title {
+      margin-bottom: 5px;
     }
   }
 
   .pane-middle {
     width: 280px;
     height: 100%;
-    border-right: 1px solid $gray-1;
     padding: 24px;
     .pane-setting {
       padding-bottom: 12px;
       margin-bottom: 12px;
       border-bottom: 1px solid $gray-1;
+      .pane-setting-inside {
+        line-height: 24px;
+      }
     }
   }
 
@@ -215,6 +237,7 @@ body {
     flex: 1;
     height: 100%;
     overflow-y: auto;
+    border-left: 1px solid $gray-1;
     .hidden {
       display: none;
     }
@@ -263,6 +286,9 @@ body {
     .center {
       text-align: center;
     }
+    .right {
+      text-align: right;
+    }
   }
 
   .select-a-domain {
@@ -275,7 +301,6 @@ body {
     cursor: pointer;
     transition: all 0.2s;
     color: $gray-7;
-
     .setting-title,
     .setting-subtitle {
       display: block;
@@ -291,7 +316,7 @@ body {
 
     .super-setting {
       display: flex;
-
+      align-items: center;
       .super-setting-title {
         display: inline;
         display: flex;
@@ -325,7 +350,7 @@ body {
 .normal-text {
   font-size: 15px;
   color: $gray-7;
-  line-height: 22px;
+  line-height: 26px;
   margin-bottom: 8px;
 
   a {
@@ -361,8 +386,8 @@ body {
 
   .subtext-container {
     display: flex;
-    justify-content: center;
-    margin: 8px;
+    justify-content: left;
+    margin: 8px 0;
     padding-bottom: 16px;
 
     .subtext {
@@ -449,7 +474,6 @@ body {
   }
 
   .modal-subtitle {
-    text-align: center;
     color: $gray-6;
     padding: 16px;
   }
@@ -526,8 +550,6 @@ body {
 .row {
   margin-top: 12px;
   margin-bottom: 12px;
-  border-bottom: 1px solid $gray-2;
-
   .label {
     display: inline-block;
     color: $black;
@@ -537,20 +559,21 @@ body {
   }
 
   .input {
-    font-size: 15px;
+    font-size: 14px;
     display: inline-block;
-    margin: 0;
-    padding: 0;
+    margin: 10px 0 0;
+    padding: 5px 10px;
     width: 100%;
     color: #32325d;
-    border: none;
     outline: none;
     line-height: 28px;
     background: $gray-0;
+    border: 1px solid $gray-2;
+    border-radius: 4px;
   }
 
   .input::placeholder {
-    color: $gray-4;
+    color: $gray-6;
   }
 
   .monospace {
@@ -603,7 +626,7 @@ body {
   }
 
   .text {
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: $gray-6;
   }
 }
@@ -674,7 +697,7 @@ foreignObject {
 }
 
 .orange-button:hover {
-  color: $orange-7;
+  color: $orange-2;
 }
 
 .big-red-button {

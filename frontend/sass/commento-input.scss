@@ -2,14 +2,14 @@
 @import "checkbox.scss";
 
 textarea,
-input[type=text] {
+input[type="text"] {
   background: #ffffff;
-  border: 1px solid rgba(50, 50, 93, .1);
+  border: 1px solid rgba(50, 50, 93, 0.1);
   border-radius: 3px;
   color: #525f7f;
 }
 
-input[type=text]::placeholder {
+input[type="text"]::placeholder {
   color: #cacaca;
 }
 
@@ -61,7 +61,7 @@ textarea {
 .commento-submit-button {
   float: right;
   background: $blue-8;
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-size: 12px;
   margin-top: 10px;
 }
@@ -77,7 +77,7 @@ textarea {
   input[type="checkbox"] + label {
     padding-left: 24px;
     font-size: 12px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-weight: bold;
     color: $gray-7;
   }
@@ -95,7 +95,7 @@ textarea {
   color: $gray-6;
   margin: 0px 16px;
   font-size: 12px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   border: none;
   line-height: 58px;
   font-weight: 400;

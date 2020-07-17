@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0">
   <script src="[[[.CdnPrefix]]]/js/jquery.js"></script>
   <script src="[[[.CdnPrefix]]]/js/vue.js"></script>
   <script src="[[[.CdnPrefix]]]/js/highlight.js"></script>
@@ -43,7 +44,9 @@
   <nav>
     <ul class="d-flex align-items-stretch">
       <li class="d-flex align-items-stretch">
-        Hi, <div id="owner-name"></div>!
+        <div>Hi,&nbsp;</div>
+        <div id="owner-name"></div>
+        <div>&nbsp;!</div>
       </li>
       <li class="d-flex align-items-stretch">
         <a href="/logout?redirect=/comments/dashboard" class="navbar-item">Logout</a>
@@ -158,8 +161,8 @@
         <!-- Stats -->
         <div id="statistics-view" class="view hidden">
           <div class="view-inside">
-            <div class="mid-view center">
-              <div class="center center-title">
+            <div class="mid-view">
+              <div class="center-title">
                 Analytics
               </div>
 
@@ -273,7 +276,7 @@
                       </div>
                     </div>
 
-                    <div class="center">
+                    <div class="right">
                       <button id="save-general-button" onclick="window.commento.generalSaveHandler()"
                         class="button">Save
                         Changes</button>
@@ -427,7 +430,7 @@
                       </div>
                     </div>
 
-                    <div class="center">
+                    <div class="right">
                       <button id="save-general-button" onclick="window.commento.generalSaveHandler()"
                         class="button">Save
                         Changes</button>
@@ -568,7 +571,7 @@
         <div id="danger-view" class="view hidden">
           <div class="view-inside">
             <div class="mid-view">
-              <div class="center center-title">
+              <div class="center-title">
                 Danger Zone
               </div>
 

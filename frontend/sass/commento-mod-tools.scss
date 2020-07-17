@@ -4,7 +4,7 @@
   margin-bottom: 16px;
 
   button {
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: $gray-7;
     font-size: 12px;
     font-weight: 700;
@@ -18,7 +18,7 @@
 
 .commento-mod-tools::before {
   content: "Moderator Tools";
-  text-transform: uppercase;
+  text-transform: capitalize;
   color: $indigo-8;
   font-size: 12px;
   font-weight: 700;
