@@ -2,9 +2,9 @@ version: '3'
 
 services:
   comments_server:
-    image: registry.gitlab.com/socialsuite/s9_comments:latest
+    build: .
     ports:
-      - 3003:8080
+      - 8080:8080
     environment:
       COMMENTO_ORIGIN: "${COMMENTO_ORIGIN}"
       COMMENTO_PORT: "${COMMENTO_PORT}"

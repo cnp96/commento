@@ -56,7 +56,7 @@ deploy-in-dev:
   environment:
     name: dev
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_REF_NAME =~ /v.*/i
+    - if: $CI_COMMIT_BRANCH == "develop"
     - if: $CI_COMMIT_BRANCH =~ /^ci-test-*/i
       when: manual
   script:
@@ -67,7 +67,7 @@ deploy-in-production:
   environment:
     name: production
   rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_REF_NAME =~ /v.*/i
+    - if: $CI_COMMIT_BRANCH == "master"
       when: manual
   script:
     - bash .gitlab-deploy.sh
